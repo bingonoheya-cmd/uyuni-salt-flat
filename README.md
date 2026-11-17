@@ -1,239 +1,156 @@
-# Uyuni Salt Flat（ウユニ塩原ディメンション）
+# Uyuni Salt Flat
 
-English: [README_en.md](README_en.md)
+日本語: [README_ja.md](README_ja.md)
 
-Minecraft 1.20.1 / Forge 47.x 用。
-見渡すかぎり鏡張りの塩原が続くディメンションと、歩くたびに足元へ広がる波紋を追加します。
-影MOD（Oculus + Embeddium/Rubidium）で遊ぶ前提で作ってあります。
-
----
-
-## 入れ方（かんたん）
-
-**Windows**：zip を展開して `install.bat` をダブルクリック → 待つ → `1` を押す。これで完了です。
-**Mac / Linux**：`install.command` をダブルクリックします。
-
-インストーラーが自動でやってくれること：
-
-- Java 17 を探して、無ければこのフォルダの中にだけ用意する
-- Mod を組み立てて jar を作る（初回は 10 分くらい）
-- Forge 1.20.1 が入っていなければ、ダウンロードページを開いて案内する
-- `mods` フォルダへコピーする（前のバージョンの jar は入れ替え）
-
-CurseForge や Prism を使っている人は、`2` を押すと入れる先のフォルダを選べます。
-
-### 手動でビルドする場合
-
-JDK 17 を入れてから `gradlew.bat build`（Mac / Linux は `./gradlew build`）を実行します。
-完成品は `build/libs/uyuni-1.0.0.jar` にできます。
-開発環境で試すだけなら `gradlew runClient` でも起動できます。
+For Minecraft 1.20.1 / Forge 47.x.
+Adds a dimension of endless mirror-like salt flats inspired by Salar de Uyuni.
+The thin layer of water on the salt reflects the sky, clouds, stars, players and mobs,
+and every footstep leaves a ripple.
+Built to look its best with shader packs (Oculus + Embeddium), and also works without them.
 
 ---
 
-## 遊び方
+## Installing
 
-| もの | 入手 | 説明 |
+**Players:** put `uyuni-1.0.0.jar` into your `mods` folder (Forge 1.20.1).
+For shaders, also install [Oculus](https://modrinth.com/mod/oculus) and [Embeddium](https://modrinth.com/mod/embeddium).
+
+**Building from source:**
+- Windows: unzip and double-click `install.bat`. It finds or downloads Java 17, builds the mod and copies it into `mods`. The first build takes about 10 minutes.
+- Mac / Linux: double-click `install.command`.
+- Manually: install JDK 17 and run `./gradlew build`. The jar is written to `build/libs/`.
+
+---
+
+## How to play
+
+| Item | Recipe / how to get | Description |
 |---|---|---|
-| **塩の手鏡** | ガラス板×4 + ネザークォーツ×4 + エンダーパール（中央） | 右クリックで塩原へ移動。塩原で使うと元いた場所へ帰る |
-| **鏡張りの塩原** | 塩のブロック×4 + 水入りバケツ | 薄く水が張った塩の板。置いた場所がミニ鏡面になる |
-| **塩のブロック** | 塩原の地面の下を掘る | 白い塩の建材 |
-| **鏡の塩水入りバケツ** | 塩原の水面を空のバケツですくう | 塩湖の水。好きな場所に小さな塩湖を作れる |
+| **Salt Mirror** | Glass Pane ×4 + Nether Quartz ×4 + Ender Pearl (center) | Right-click to travel to the Salt Flat. Use it there to return to where you were |
+| **Mirror Salt Flat** | Salt Block ×4 + Water Bucket | A thin salt slab covered in brine. Wherever you place it becomes a small mirror |
+| **Salt Block** | Dig below the surface of the Salt Flat | A white salt building block |
+| **Mirror Brine Bucket** | Scoop the Salt Flat's water with an empty bucket | Build your own little salt lake anywhere |
 
-### 鏡の塩水
+All items are in the dedicated **Uyuni Salt Flat** creative tab.
 
-塩原に張っている水は、バニラの水ではなくこのModの液体「鏡の塩水」です。
+Via command: `/execute in uyuni:salt_flat run tp @s ~ 65 ~`
 
-- 白っぽく澄んだ、ガラスのような水。青くなく、小さな塩の粒がゆっくりきらめきます
-- 塩分が濃いので重く、とろりとしています。流れはゆっくりで、2〜3 ブロックしか広がりません
-- 無限水源は作れません（すくえばその分減ります）
-- 流れている溶岩に触れると「塩のブロック」に固まります（溶岩の水源は黒曜石）
-- ネザーでは蒸発します
-- 塩の板（鏡張りの塩原）からバケツですくうと乾いた塩の板に、注ぐとまた鏡になります
+### Mirror Brine
 
-アイテムはクリエイティブの専用タブ「ウユニ塩湖」にまとまっています。
+The water on the Salt Flat is not vanilla water but the mod's own fluid, **Mirror Brine**.
 
-コマンドで行く場合：`/execute in uyuni:salt_flat run tp @s ~ 65 ~`
+- Pale, glass-clear water rather than blue, with tiny salt crystals that slowly sparkle
+- Dense and syrupy: it flows slowly and only spreads 2–3 blocks
+- It cannot form infinite sources; scooping it removes it
+- Flowing lava that touches it hardens into a Salt Block (lava sources become obsidian)
+- It evaporates in the Nether
+- Scooping it from a Mirror Salt Flat leaves a dry slab; pouring it back makes it a mirror again
 
 ---
 
-## 水鏡と波紋のしくみ
+## The water mirror
 
-影MODを使っていてもいなくても、水鏡と揺れが出ます。描き方は自動で切り替わります。
+### Without shaders
+A true planar reflection: the sky, clouds, the sun, players, mobs and placed blocks are reflected in real time.
 
-| | 影MODなし（Embeddiumのみも可） | 影MOD使用中（Oculus） |
-|---|---|---|
-| 空・太陽・雲の映り込み | このModが描く | **影パックが描いた空をこのModが水鏡に映す** |
-| 自分・Mob・置いたブロック | このModが描く | **影パックに描かせる（影パックの光・影・霧が掛かる）** |
-| 歩いた時の揺れ | 水鏡の像が揺れる | **影パックの映り込みごと揺れる** |
+### With shaders (Oculus)
+- **Players, mobs and blocks** are drawn as part of the world while the shader pack renders, so they receive the pack's lighting, colour grading and fog.
+  Distant mobs are reflected as long as they are within your entity render distance.
+- **Sky, sun, clouds and stars** are taken from what the shader pack actually drew.
+  - Directions that are on screen are read directly from the finished image, so they are always live (meteors included).
+  - Off-screen directions use a "sky map" that remembers the sky you have looked at.
+    Looking up refreshes it, including fine cloud and star detail.
+  - When the time of day or weather changes sharply (`/time set`, rain starting, sunset colours),
+    the remembered sky is marked as stale and repainted from the horizon inward over a few seconds.
+- **Wobble:** ripples tilt the water surface, so reflections distort naturally as you walk.
 
-### 影MODなしの時
+Tested with: AstraLex V93.0, BSL v10.0, Complementary Reimagined r5.6.1 + Euphoria Patches 1.7.8,
+Complementary Unbound r5.6.1 (with and without Euphoria Patches 1.7.8), iterationT 3.2.0, SEUS Renewed v1.0.1 and Sildur's Vibrant Shaders v1.541 Extreme
+(Forge 47.4.28, Oculus 1.8.0, Embeddium 0.3.31).
 
-- 水面を境に上下をひっくり返した世界を別の画面に描いて、水面に貼っています。
-- 遠く（水平線の近く）ほど鏡っぽく、真下ほど足元の塩がうっすら透けます。
+### Known limitations with shaders
+- Sky directions you have not looked at for a while may look slightly blurred or show a slightly older sky. Looking up refreshes them.
+- Fast-moving mobs' reflections can smear a little because of the shader pack's temporal anti-aliasing (TAA).
+- The Salt Flat's water is not "water" to the shader pack, so the pack's water waves/reflection settings don't affect it (they still affect normal oceans and rivers).
 
-### 影MODを使っている時
+### If the Salt Flat looks dark with a shader pack
+The pack may not treat this dimension as an overworld. Add this line to the pack's `shaders/dimension.properties` (create it if missing):
+```
+dimension.world0 = minecraft:overworld uyuni:salt_flat
+```
 
-- **映り込んだ自分・Mob・ブロック**
-  影パックが世界を描いている最中に、世界の一部として描いています。なので影パックの光・色調・霧がそのまま掛かります。
-  反転した姿は本来なら水面の下（塩の地面の中）にあって隠れてしまうので、各点を「目から見た同じ視線の上」で水面のすぐ上の薄い層まで引き寄せています。
-  見た目（形と位置）は本物の鏡像と同じで、影パックの水に覆われないのでくっきり映ります。
-  パーツ同士の前後（ヒレの奥に胴体、など）は、薄い層の中で奥行きの順番を保ったまま並べています。
-  高く飛んでいる Mob（空クジラなど）でも、パーツが同じ奥行きに潰れてちらつくことはありません。
-  影パック使用中は、歩いた時の画面の揺れが目の位置を少し動かします。その分も計算に入れているので、歩いても映り込みがずれません。
-  日光の当たり方は本物の Mob と同じ向きで計算されるので、鏡に映った姿として正しい明るさになります。
-- **空・太陽・雲・星の映り込み**
-  影パックが描いた空を、方向ごとに「空マップ」へ記録しています。水面ではそこから、反射した方向の空を引きます。
-  反射した方向の空がいまの画面に写っている時は、完成した絵から直接読みます（雲の動きや太陽まで正確）。
-  一度見上げた空は、足元を見下ろしている時でも映ります。
-  - 画面に写っている方向の空は、毎フレーム書き足します（止まっている時は強く、カメラを動かしている時は弱く）。
-    動かしている最中の絵は影パックのモーションブラーで星や雲が流れているので、弱くしか混ぜず焼き付けません。
-  - 画面のふちほど弱く書き足すので、覚えた時期が違う所の境目もなめらかにつながります。
-  - 画面に写っていない方向は、少しずつまわりの空になじませます。古い雲がくっきり残って、パネル状の継ぎ目になるのを防ぎます。
-    （そのかわり、長いあいだ見ていない方向の雲は少しぼやけます）
-  - 流れ星のような一瞬のものは、映る方向の空がいま画面に写っている時に映ります。
-  - **ずっと下を向いていても、水面には「今の時刻の空」が映ります。**
-    空が画面に写っている時に、「この時刻の、この高さの空はこんな色」を表に覚えています（1 日を 64 区切り × 高さ 8 段）。
-    空マップは、見ていない間に少しずつ古くなります（普段は 1〜2 分半ほど。夕焼けや雨の降り始めなど、空が変わっている時はもっと早く）。
-    古くなった方向は、水面では表から引いた「今の時刻の空」に置き換わります。夜なら、空と一緒に回る星も映ります。
-    - `/time set` で時刻を飛ばした時は、その瞬間に置き換わります。
-    - まだ一度も見たことのない時刻は、前後の見た時刻から、昼と夜の明るさの違いを掛けて推測します。
-    - 表に覚えているのは「その高さの空の平均の色」なので、古くなった方向には雲の形や太陽は映りません。見上げると、細かい雲や星まですぐ戻ります。
-  - 飛んでいる Mob（空クジラなど）のふち 4 ピクセルは空マップに覚えません。影パックの TAA でにじんだ Mob の色が、空に残像として焼き付くのを防ぎます。
-  - まだ見たことのない方向は、まわりの見た空から推測して埋めます。バニラの空の色は使いません。
-  - 推測もできない所は、無理に描き換えず影パックの水のままにします。
-  - ワールドに入った直後は、カメラを止めながら空をぐるっと見回すと、すぐきれいになります。
-- **揺れ**
-  波紋で水面が傾いた分だけ反射の向きを変えて描いています。
-- **描くタイミング**
-  影パックが絵を完成させた直後、まだ「奥行き」の情報が残っているうちに描いています。
-  奥行きを見れば、どこが水面でどこが空か、何が手前にあるか（Mob・パーティクル・ブロック・一人称の手）が正確に分かります。
-  なので、手前にあるものを水鏡や空で塗りつぶすことはありません。F1 で画面表示を消している時も同じように動きます。
+---
 
-### 遠くの Mob も映る
+## Ripples
 
-普段その Mob が見えている距離なら、どれだけ遠くても映ります（ビデオ設定の「エンティティ描画距離」に従います）。
-もっと遠くまで映したい時は「エンティティ描画距離」を上げてください。
-サーバーから送られてこないほど遠い Mob は、もともと画面にも出ないので映りません。
+- One ripple per footstep, placed under the foot that just landed; two when you land from a jump.
+- Other players and mobs make ripples too.
+- The wave motion follows real shallow-water physics: rings start fine and spread apart as they travel, tiny capillary ripples race ahead, and each ripple is slightly irregular.
 
-### 波紋
+---
 
-- 脚の振りのアニメーションに合わせて、**着いた方の足の位置に 1 つずつ**波紋が出ます。
-- ジャンプで着地した時は、両足ぶんの **2 つ**が同時に出ます。
-- 他のプレイヤーや Mob の足元にも出ます。
-- 波の動きは、水深数cmの浅い水を踏んだ時の性質に合わせてあります。
-  - 波の塊は約 0.8 ブロック/秒で広がる（浅い水の波の速さ √(重力×水深)）
-  - 輪は細かく始まり、広がるにつれて間隔が開いて、本数も増えていく
-  - 輪は波の塊より少し遅く動くので、新しい輪が先頭で次々に生まれる
-  - 先頭のさらに外を、表面張力による細かいさざ波が速く走って、すぐ消える
-  - 足の形は丸くないので、輪は少しいびつ（波紋ごとに形が違う）
-  - 踏んだ瞬間だけ中心が小さく盛り上がる
-  - 広がるほど弱まり、2 秒ほどで消える
-- 波紋は「水面の傾き」として計算しているので、映った空や雲、Mob が自然にゆがみます。
-- 水越しに透ける塩は、波で屈折して少しゆがみます。波の山の下には光が集まって、明るい筋（コースティクス）が揺れます。
-- 遠くで細かすぎる波は、画面がチラつかないよう自動で消えます。
+## In-game commands (client-side, work on any server)
 
-### 影MODとの相性
-
-動作確認済み（Forge 47.4.28 / Oculus 1.8.0 / Embeddium 0.3.31）：
-AstraLex V93.0、BSL v10.0、Complementary Reimagined r5.6.1 + Euphoria Patches 1.7.8、
-Complementary Unbound r5.6.1（Euphoria Patches 1.7.8 あり／なし）、iterationT 3.2.0、SEUS Renewed v1.0.1、Sildur's Vibrant Shaders v1.541 Extreme
-
-
-- 地面は「鏡の塩水に浸った薄い塩の板」です。水はバニラの水ではないので、影パックの水の表現（波・水の色・反射）は掛かりません。
-  水面の見た目はこのModの水鏡だけで決まるので、影パックの水との上書き合戦や、影パックの波による白い縞が起きません。
-- 塩水に影パックの水の表現も掛けたい時は、影パックの `block.properties` で水と同じ番号の行に `uyuni:mirror_brine` を足すと、水として扱われます（おすすめはしません）。
-- 当たり判定を水面の高さぴったりにしてあるので、水中扱いにならず、水面の上を歩けます。
-- 影MOD併用の重ね描きがおかしい時は、設定の `withShaders = false` で切れます（影パックの反射だけになります）。
-
-### 注意
-
-- 影MODなしの時、グラフィック設定「最高品質（Fabulous!）」では水鏡がずれることがあります。「描画優先（Fancy）」で遊んでください。
-
-### 困った時（ゲーム内コマンド）
-
-サーバーに Mod が入っていなくても使える、手元だけのコマンドです。
-
-| コマンド | 内容 |
+| Command | What it does |
 |---|---|
-| `/uyuni debug` | 水鏡がいまどのモードで動いているか、止まっていないか、止まっていればその理由を表示 |
-| `/uyuni retry` | エラーで止まった機能を、もう一度動かす |
-| `/uyuni sky reset` | 影MOD使用中に覚えた空（空マップ）を消して、覚え直す |
+| `/uyuni debug` | Shows how the water mirror is running, and why it stopped if it did |
+| `/uyuni retry` | Restarts a feature that stopped because of an error |
+| `/uyuni sky reset` | Clears the remembered sky (shader mode) and records it again |
 
-不具合を報告する時は、`/uyuni debug` の表示のスクショと `logs/latest.log` があると原因をすぐ特定できます。
-
----
-
-## 影パック側のおすすめ設定
-
-- 塩原の水は影パックの「水」ではないので、影パックの水の波や反射の設定は塩原には効きません（ふつうの海や川には効きます）。
-- **見た目がおかしい／暗い場合**
-  影パックがこのディメンションを地上として扱っていない可能性があります。
-  影パックの `shaders/dimension.properties` に次の 1 行を足してください（無ければ新規作成）。
-  ```
-  dimension.world0 = minecraft:overworld uyuni:salt_flat
-  ```
+When reporting a bug, a screenshot of `/uyuni debug`, your shader pack name and `logs/latest.log` help a lot.
 
 ---
 
-## カスタマイズ
+## Config: `config/uyuni-client.toml`
 
-### クライアント設定 `config/uyuni-client.toml`
+Created automatically the first time you launch the game with the mod.
+You can also change the language, toggle ripples and the mirror, and rename items in-game.
+Open the settings with the **Uyuni Settings** button in the top-left of the pause menu, the `/uyuni config` command, or **Mods → Uyuni Salt Flat → Config**.
+You can also bind a key under Controls → Key Binds → Uyuni Salt Flat → Open settings.
 
-Mod を入れて最初に起動した時に自動で作られます。
-ゲーム内の設定画面からも、言語・波紋・水鏡のオン/オフと、名前の変更ができます。
-設定画面は、Esc画面の左上の「ウユニ塩湖の設定」ボタン、コマンド `/uyuni config`、「Mod」→ Uyuni Salt Flat →「設定」のどれからでも開けます。
-キー割り当て（操作設定 → ウユニ塩湖 →「設定を開く」）にキーを割り当てることもできます。
+**[general]**
 
-**[general] 基本**
-
-| 項目 | 既定値 | 内容 |
+| Key | Default | Description |
 |---|---|---|
-| `language` | auto | Modの言語。`auto`=ゲームと同じ / `ja`=日本語 / `en`=英語 |
+| `language` | auto | Mod language: `auto` = same as the game, `ja` = Japanese, `en` = English |
 
-**[names] 名前の変更**（空欄で元の名前）
+**[names]** (leave empty for the default name)
 
-| 項目 | 変わるもの |
+| Key | Renames |
 |---|---|
-| `tab` | クリエイティブのタブ |
-| `saltMirror` | 塩の手鏡 |
-| `mirrorSalt` | 鏡張りの塩原 |
-| `saltBlock` | 塩のブロック |
-| `mirrorBrine` | 鏡の塩水 |
-| `mirrorBrineBucket` | 鏡の塩水入りバケツ |
+| `tab` | The creative tab |
+| `saltMirror` | Salt Mirror |
+| `mirrorSalt` | Mirror Salt Flat |
+| `saltBlock` | Salt Block |
+| `mirrorBrine` | Mirror Brine |
+| `mirrorBrineBucket` | Mirror Brine Bucket |
 
-名前の変更は自分の画面だけに反映されます（マルチプレイの他の人には元の名前で見えます）。
+Custom names only change what you see; other players on a server still see the default names.
 
-| 項目 | 既定値 | 内容 |
+**[ripples]**
+
+| Key | Default | Description |
 |---|---|---|
-**[ripples] 波紋**
+| `enabled` | true | Ripples on/off |
+| `inAllShallowWater` | false | Also show ripples in ordinary shallow water (1 block deep or less) |
+| `scale` | 1.0 | Ripple size/strength |
+| `range` | 96 | Distance (blocks) within which mobs/players make ripples |
+| `splashDroplets` | false | Small splash droplets when landing from a jump |
 
-| 項目 | 既定値 | 内容 |
+**[mirror]**
+
+| Key | Default | Description |
 |---|---|---|
-| `enabled` | true | 波紋のオン／オフ |
-| `inAllShallowWater` | false | 普通の浅瀬（水深1ブロック以下）でも波紋を出す |
-| `scale` | 1.0 | 波紋の大きさ・強さ |
-| `range` | 96 | 何ブロック先の Mob／プレイヤーまで波紋を出すか |
-| `splashDroplets` | false | ジャンプで着地した時の小さな水しぶき |
+| `enabled` | true | Water mirror on/off |
+| `withShaders` | true | Draw the mirror on top of the shader pack when using Oculus |
+| `reflectivity` | 0.82 | Reflection strength looking straight down (lower shows more salt) |
+| `grazingReflectivity` | 0.97 | Reflection strength toward the horizon |
+| `shaderReflectivity` | 0.93 | Reflection strength looking down with shaders (raise it if salt or shadows show through at night) |
+| `wobble` | 1.0 | Mirror wobble when walking (0 = none) |
+| `blockRadius` | 24 | Radius for reflecting placed blocks (0 = off, lighter) |
 
-**[mirror] 水鏡**
+---
 
-| 項目 | 既定値 | 内容 |
-|---|---|---|
-| `enabled` | true | 水鏡のオン／オフ |
-| `withShaders` | true | 影MOD使用中も Mob の映り込みと揺れを重ねる |
-| `reflectivity` | 0.82 | 真下を見た時の映り込み。下げると足元の塩が透ける |
-| `grazingReflectivity` | 0.97 | 遠くを見た時の映り込み |
-| `shaderReflectivity` | 0.93 | 影MOD使用中、真下を見た時の映り込み。夜に足元の塩や影が透けて見えるなら上げる |
-| `wobble` | 1.0 | 歩いた時の揺れの強さ（0 で揺れない） |
-| `blockRadius` | 24 | 置いたブロックを映す範囲。0 で映さない（軽くなる） |
+## License
 
-### ずっと夕焼けにしたい
-
-`src/main/resources/data/uyuni/dimension_type/salt_flat.json` に
-`"fixed_time": 12600,` を足してビルドし直すと、時間が夕暮れで止まります。
-`18000` にすると真夜中の星空になります（影パックの星空が映ります）。
-
-### 空や水の色
-
-`data/uyuni/worldgen/biome/salt_flat.json` の `sky_color`、`fog_color`、`water_color` で変えられます。
-値は10進数の RGB です。
+MIT. Made by BINGO.
