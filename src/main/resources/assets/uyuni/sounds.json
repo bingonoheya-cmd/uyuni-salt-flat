@@ -1,0 +1,13 @@
+{
+  "block.mirror_salt.step": {
+    "subtitle": "subtitles.uyuni.block.mirror_salt.step",
+    "sounds": [
+      {
+        "name": "minecraft:entity.player.swim",
+        "type": "event",
+        "volume": 0.6,
+        "pitch": 1.5
+      }
+    ]
+  }
+}

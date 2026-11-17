@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "uyuni:block/mirror_brine" }
+  }
+}

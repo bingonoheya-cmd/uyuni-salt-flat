@@ -1,0 +1,18 @@
+{
+  "type": "uyuni:salt_flat",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "uyuni:salt_flat",
+      "features": false,
+      "lakes": false,
+      "structure_overrides": [],
+      "layers": [
+        { "block": "minecraft:bedrock", "height": 1 },
+        { "block": "minecraft:stone", "height": 58 },
+        { "block": "uyuni:salt_block", "height": 5 },
+        { "block": "uyuni:mirror_salt", "height": 1 }
+      ]
+    }
+  }
+}

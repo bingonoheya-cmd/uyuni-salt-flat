@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "uyuni:block/salt_block",
+        "y": 0
+      },
+      {
+        "model": "uyuni:block/salt_block",
+        "y": 90
+      },
+      {
+        "model": "uyuni:block/salt_block",
+        "y": 180
+      },
+      {
+        "model": "uyuni:block/salt_block",
+        "y": 270
+      }
+    ]
+  }
+}

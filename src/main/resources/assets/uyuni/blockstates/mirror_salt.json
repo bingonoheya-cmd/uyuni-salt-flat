@@ -1,0 +1,40 @@
+{
+  "variants": {
+    "flooded=true": [
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 0
+      },
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 90
+      },
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 180
+      },
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 270
+      }
+    ],
+    "flooded=false": [
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 0
+      },
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 90
+      },
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 180
+      },
+      {
+        "model": "uyuni:block/mirror_salt",
+        "y": 270
+      }
+    ]
+  }
+}

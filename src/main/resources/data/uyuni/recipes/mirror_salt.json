@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "uyuni:salt_block"
+    },
+    {
+      "item": "uyuni:salt_block"
+    },
+    {
+      "item": "uyuni:salt_block"
+    },
+    {
+      "item": "uyuni:salt_block"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    }
+  ],
+  "result": {
+    "item": "uyuni:mirror_salt",
+    "count": 4
+  }
+}

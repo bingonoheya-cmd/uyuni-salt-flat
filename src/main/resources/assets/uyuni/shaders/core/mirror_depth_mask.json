@@ -1,0 +1,77 @@
+{
+  "blend": {
+    "func": "add",
+    "srcrgb": "1",
+    "dstrgb": "0"
+  },
+  "vertex": "uyuni:mirror_composite",
+  "fragment": "uyuni:mirror_depth_mask",
+  "attributes": [
+    "Position"
+  ],
+  "samplers": [
+    {
+      "name": "Sampler0"
+    }
+  ],
+  "uniforms": [
+    {
+      "name": "InvProjView",
+      "type": "matrix4x4",
+      "count": 16,
+      "values": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "Eye",
+      "type": "float",
+      "count": 3,
+      "values": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "PlaneY",
+      "type": "float",
+      "count": 1,
+      "values": [
+        -1.0
+      ]
+    },
+    {
+      "name": "Radius",
+      "type": "float",
+      "count": 1,
+      "values": [
+        256.0
+      ]
+    },
+    {
+      "name": "ScreenSize",
+      "type": "float",
+      "count": 2,
+      "values": [
+        1.0,
+        1.0
+      ]
+    }
+  ]
+}
